@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using System.Xml;
+﻿using HotFolderMonitor;
+using System.Globalization;
 
 namespace HF_FIX
 {
@@ -9,7 +9,7 @@ namespace HF_FIX
         private string DirectoryPath;        // The directory path where files are processed
         private string CurrentColorProfile;  // The current color profile being processed
 
-        public int copies;
+        public float copies;
         public float printHeight;
         public float mediaThikness;
 
@@ -62,31 +62,18 @@ namespace HF_FIX
 
         private void ProcessKsfFile(string fullPath)
         {
-            string xmlFilePath = fullPath;
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlFilePath);
+            KsfFileHandler fileHandler = new KsfFileHandler(fullPath);
+            CurrentColorProfile = fileHandler.returnColorProfile();
 
-            string mediaName = xmlDoc.DocumentElement.SelectSingleNode("//MediaName").InnerText.ToLower();
-            if (mediaName.Contains("white") || mediaName.Contains("white")) CurrentColorProfile = "white";
-            else CurrentColorProfile = "another";
+            Dictionary<string, float> values = new Dictionary<string, float>();
 
-            if (mediaThikness != 0)
-            {
-                xmlDoc.DocumentElement.SelectSingleNode("//MediaThickness").InnerText = mediaThikness.ToString(culture);
-                xmlDoc.Save(fullPath);
-            }
-            if (printHeight != 0)
-            {
-                xmlDoc.DocumentElement.SelectSingleNode("//MediaPrintHeight").InnerText = printHeight.ToString(culture);
-                xmlDoc.Save(fullPath);
-            }
-            if (copies != 0)
-            {
-                xmlDoc.DocumentElement.SelectSingleNode("//TotalCopies").InnerText = copies.ToString(culture);
-                xmlDoc.Save(fullPath);
-            }
+            values["TotalCopies"] = copies;
+            values["MediaPrintHeight"] = printHeight;
+            values["MediaThickness"] = mediaThikness;
+            values["XOffsetMM"] = 1488;
 
-            File.Move(fullPath, fullPath + "-processed");// Rename the processed file by appending "-processed" to its name
+            fileHandler.updateValues(values);
+
         }
 
         private void ProcessTifFile(string fullPath)
