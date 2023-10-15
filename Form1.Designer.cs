@@ -39,9 +39,12 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            numericUpDown4 = new NumericUpDown();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -130,11 +133,30 @@
             label4.TabIndex = 7;
             label4.Text = "Media thikness";
             // 
+            // numericUpDown4
+            // 
+            numericUpDown4.Location = new Point(109, 183);
+            numericUpDown4.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            numericUpDown4.Name = "numericUpDown4";
+            numericUpDown4.Size = new Size(41, 23);
+            numericUpDown4.TabIndex = 8;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 185);
+            label5.Name = "label5";
+            label5.Size = new Size(36, 15);
+            label5.TabIndex = 9;
+            label5.Text = "Spray";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(335, 187);
+            ClientSize = new Size(335, 228);
+            Controls.Add(label5);
+            Controls.Add(numericUpDown4);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -149,6 +171,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -164,5 +187,7 @@
         private Label label2;
         private Label label3;
         private Label label4;
+        private NumericUpDown numericUpDown4;
+        private Label label5;
     }
 }
