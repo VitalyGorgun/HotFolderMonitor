@@ -78,14 +78,20 @@
             // 
             // numericUpDown2
             // 
+            numericUpDown2.DecimalPlaces = 1;
+            numericUpDown2.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             numericUpDown2.Location = new Point(109, 125);
+            numericUpDown2.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(41, 23);
             numericUpDown2.TabIndex = 3;
             // 
             // numericUpDown3
             // 
+            numericUpDown3.DecimalPlaces = 1;
+            numericUpDown3.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             numericUpDown3.Location = new Point(109, 154);
+            numericUpDown3.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(41, 23);
             numericUpDown3.TabIndex = 4;
