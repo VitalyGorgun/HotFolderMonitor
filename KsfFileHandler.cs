@@ -19,6 +19,7 @@ namespace HotFolderMonitor
             string mediaName = xmlDoc.DocumentElement.SelectSingleNode("//MediaName").InnerText.ToLower();
             if (mediaName.Contains("white") || mediaName.Contains("white")) return "white";
             else return "another";
+
         }
         public void updateValues(string fullPath)
         {
