@@ -6,14 +6,14 @@ namespace HotFolderMonitor
     internal class KsfFileHandler
     {
         private string filePath;
-        private XmlDocument xmlDoc = new XmlDocument();
+        private XmlDocument xmlDoc = new();
 
         public KsfFileHandler(string filePath)
         {
             this.filePath = filePath;
         }
 
-        public string returnColorProfile()
+        public string ReturnColorProfile()
         {
             xmlDoc.Load(filePath);
             string mediaName = xmlDoc.DocumentElement.SelectSingleNode("//MediaName").InnerText.ToLower();
@@ -23,9 +23,9 @@ namespace HotFolderMonitor
 
         }
 
-        public void updateValues(Dictionary<string, string> values)
+        public void UpdateValues(Dictionary<string, string> values)
         {
-            CultureInfo culture = new CultureInfo("en-US");
+            CultureInfo culture = new("en-US");
             xmlDoc.Load(filePath);
 
             foreach (var pair in values)

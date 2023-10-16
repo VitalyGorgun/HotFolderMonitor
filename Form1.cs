@@ -8,21 +8,23 @@ namespace HotFolderMonitor
         FileProcessor x;
         public Form1() { InitializeComponent(); }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             {
-                CultureInfo culture = new CultureInfo("en-US");
-                Dictionary<string, string> values = new Dictionary<string, string>();
-                values["TotalCopies"] = copiesValue.Enabled ? copiesValue.Value.ToString(culture) : "none";
-                values["MediaPrintHeight"] = printHeight.Enabled ? printHeight.Value.ToString(culture) : "none";
-                values["MediaThickness"] = mediaThikness.Enabled ? mediaThikness.Value.ToString(culture) : "none";
-                values["SprayAmount"] = sprayAmount.Enabled ? sprayAmount.Value.ToString(culture) : "none";
-                values["LinearSprayAmount"] = sprayAmount.Enabled ? sprayAmount.Value.ToString(culture) : "none";
-                values["YOffsetMM"] = yOffset.Enabled ? yOffset.Value.ToString(culture) : "none";
-                values["XCenter"] = xCenter.Enabled ? xCenter.Checked.ToString() : "none";
-                values["YCenter"] = yOffset.Enabled ? "false" : "none";
-                values["IsSpray"] = spray.Enabled ? spray.Checked.ToString() : "none";
-                values["IsWipe"] = wipe.Enabled ? wipe.Checked.ToString() : "none";
+                CultureInfo culture = new("en-US");
+                Dictionary<string, string> values = new()
+                {
+                    ["TotalCopies"] = copiesValue.Enabled ? copiesValue.Value.ToString(culture) : "none",
+                    ["MediaPrintHeight"] = printHeight.Enabled ? printHeight.Value.ToString(culture) : "none",
+                    ["MediaThickness"] = mediaThikness.Enabled ? mediaThikness.Value.ToString(culture) : "none",
+                    ["SprayAmount"] = sprayAmount.Enabled ? sprayAmount.Value.ToString(culture) : "none",
+                    ["LinearSprayAmount"] = sprayAmount.Enabled ? sprayAmount.Value.ToString(culture) : "none",
+                    ["YOffsetMM"] = yOffset.Enabled ? yOffset.Value.ToString(culture) : "none",
+                    ["XCenter"] = xCenter.Enabled ? xCenter.Checked.ToString() : "none",
+                    ["YCenter"] = yOffset.Enabled ? "false" : "none",
+                    ["IsSpray"] = spray.Enabled ? spray.Checked.ToString() : "none",
+                    ["IsWipe"] = wipe.Enabled ? wipe.Checked.ToString() : "none"
+                };
 
                 x = new FileProcessor(label1.Text, values);
 
@@ -31,71 +33,67 @@ namespace HotFolderMonitor
             }
         }
 
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();// При кліку на іконку трею відновлюємо вікно
             x.StopMonitoring();
             notifyIcon1.Visible = false; // Ховаємо іконку в треї
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Label_Click(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog folderBrowser = new FolderBrowserDialog())
+            if (sender is Label clickedLabel)
             {
-                DialogResult result = folderBrowser.ShowDialog();// Відкрити діалогове вікно вибору папки
-                if (result == DialogResult.OK)
+                switch (clickedLabel.Name)
                 {
-                    label1.Text = folderBrowser.SelectedPath;// Оновити текст Label і встановити його на повний шлях вибраної папки
+                    case "label1":
+                        using (FolderBrowserDialog folderBrowser = new())
+                        {
+                            DialogResult result = folderBrowser.ShowDialog();// Відкрити діалогове вікно вибору папки
+                            if (result == DialogResult.OK)
+                            {
+                                label1.Text = folderBrowser.SelectedPath;// Оновити текст Label і встановити його на повний шлях вибраної папки
+                            }
+                        }
+                        break;
+                    case "label2":
+                        copiesValue.Enabled = !copiesValue.Enabled;
+                        label2.ForeColor = copiesValue.Enabled ? Color.Black : Color.Gray;
+                        break;
+
+                    case "label3":
+                        printHeight.Enabled = !printHeight.Enabled;
+                        label3.ForeColor = printHeight.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label4":
+                        mediaThikness.Enabled = !mediaThikness.Enabled;
+                        label4.ForeColor = mediaThikness.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label5":
+                        sprayAmount.Enabled = !sprayAmount.Enabled;
+                        label5.ForeColor = sprayAmount.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label6":
+                        yOffset.Enabled = !yOffset.Enabled;
+                        label6.ForeColor = yOffset.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label7":
+                        xCenter.Enabled = !xCenter.Enabled;
+                        label7.ForeColor = xCenter.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label8":
+                        spray.Enabled = !spray.Enabled;
+                        label8.ForeColor = spray.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label9":
+                        wipe.Enabled = !wipe.Enabled;
+                        label9.ForeColor = wipe.Enabled ? Color.Black : Color.Gray;
+                        break;
+
+                    default:
+                        break;
                 }
             }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            copiesValue.Enabled = copiesValue.Enabled ? false : true;
-            label2.ForeColor = copiesValue.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-            printHeight.Enabled = printHeight.Enabled ? false : true;
-            label3.ForeColor = printHeight.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-            mediaThikness.Enabled = mediaThikness.Enabled ? false : true;
-            label4.ForeColor = mediaThikness.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-            sprayAmount.Enabled = sprayAmount.Enabled ? false : true;
-            label5.ForeColor = sprayAmount.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-            yOffset.Enabled = yOffset.Enabled ? false : true;
-            label6.ForeColor = yOffset.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-            xCenter.Enabled = xCenter.Enabled ? false : true;
-            label7.ForeColor = xCenter.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-            spray.Enabled = spray.Enabled ? false : true;
-            label8.ForeColor = spray.Enabled ? Color.Black : Color.Gray;
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-            wipe.Enabled = wipe.Enabled ? false : true;
-            label9.ForeColor = wipe.Enabled ? Color.Black : Color.Gray;
         }
     }
 }

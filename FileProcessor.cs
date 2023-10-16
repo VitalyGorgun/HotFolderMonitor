@@ -5,8 +5,8 @@ namespace HF_FIX
     internal class FileProcessor
     {
         private bool isMonitoring = true;
-        private string DirectoryPath = "D:/QuickP Production/Common/HotFolder";        // The directory path where files are processed
-        private string CurrentColorProfile ="another";  // The current color profile being processed
+        private string DirectoryPath;        // The directory path where files are processed
+        private string CurrentColorProfile;  // The current color profile being processed
 
         public Dictionary<string, string> XMLvalues;
 
@@ -20,8 +20,10 @@ namespace HF_FIX
         private void InitializeWatcher()
         {
             // Set up a FileSystemWatcher to monitor the specified directory
-            FileSystemWatcher watcher = new FileSystemWatcher(DirectoryPath);
-            watcher.EnableRaisingEvents = true;
+            FileSystemWatcher watcher = new(DirectoryPath)
+            {
+                EnableRaisingEvents = true
+            };
             watcher.Created += (sender, e) => OnFileCreated(e.FullPath);
         }
 
@@ -42,12 +44,13 @@ namespace HF_FIX
             if (IsPackageFull()) ReturnValues();
         }
 
-        private bool IsFileLocked(string filePath)
+        private static bool IsFileLocked(string filePath)
         {
             try
             {
                 // Attempt to open the file in exclusive mode; if successful, it's not locked
-                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None)) { return false; }
+                using FileStream fs = new(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
+                return false;
             }
             catch (IOException)
             {
@@ -57,13 +60,13 @@ namespace HF_FIX
 
         private void ProcessKsfFile(string fullPath)
         {
-            KsfFileHandler fileHandler = new KsfFileHandler(fullPath);
-            CurrentColorProfile = fileHandler.returnColorProfile();
-            fileHandler.updateValues(XMLvalues);
+            KsfFileHandler fileHandler = new(fullPath);
+            CurrentColorProfile = fileHandler.ReturnColorProfile();
+            fileHandler.UpdateValues(XMLvalues);
 
         }
 
-        private void ProcessTifFile(string fullPath)
+        private static void ProcessTifFile(string fullPath)
         {
             // Rename the processed file by appending "-processed" to its name
             File.Move(fullPath, fullPath + "-processed");

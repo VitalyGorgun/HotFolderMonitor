@@ -70,7 +70,7 @@
             label1.TabIndex = 0;
             label1.Text = "D:\\QuickP Production\\Common\\HotFolder";
             label1.TextAlign = ContentAlignment.MiddleLeft;
-            label1.Click += label1_Click;
+            label1.Click += Label_Click;
             // 
             // button1
             // 
@@ -83,7 +83,7 @@
             button1.TabIndex = 1;
             button1.Text = "START";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += Button1_Click;
             // 
             // copiesValue
             // 
@@ -128,7 +128,7 @@
             notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
             notifyIcon1.Text = "HotFolder Monitor";
             notifyIcon1.Visible = true;
-            notifyIcon1.MouseClick += notifyIcon1_MouseClick;
+            notifyIcon1.MouseClick += NotifyIcon1_MouseClick;
             // 
             // label2
             // 
@@ -140,7 +140,7 @@
             label2.Size = new Size(98, 15);
             label2.TabIndex = 5;
             label2.Text = "Copies";
-            label2.Click += label2_Click;
+            label2.Click += Label_Click;
             // 
             // label3
             // 
@@ -152,7 +152,7 @@
             label3.Size = new Size(98, 15);
             label3.TabIndex = 6;
             label3.Text = "Print height";
-            label3.Click += label3_Click;
+            label3.Click += Label_Click;
             // 
             // label4
             // 
@@ -164,7 +164,7 @@
             label4.Size = new Size(98, 15);
             label4.TabIndex = 7;
             label4.Text = "Media thikness";
-            label4.Click += label4_Click;
+            label4.Click += Label_Click;
             // 
             // sprayAmount
             // 
@@ -187,7 +187,7 @@
             label5.Size = new Size(98, 15);
             label5.TabIndex = 9;
             label5.Text = "Spray";
-            label5.Click += label5_Click;
+            label5.Click += Label_Click;
             // 
             // yOffset
             // 
@@ -208,7 +208,7 @@
             label6.Size = new Size(98, 15);
             label6.TabIndex = 11;
             label6.Text = "YOffset";
-            label6.Click += label6_Click;
+            label6.Click += Label_Click;
             // 
             // xCenter
             // 
@@ -303,7 +303,7 @@
             label7.Size = new Size(98, 15);
             label7.TabIndex = 15;
             label7.Text = "XCenter";
-            label7.Click += label7_Click;
+            label7.Click += Label_Click;
             // 
             // label8
             // 
@@ -315,7 +315,7 @@
             label8.Size = new Size(98, 15);
             label8.TabIndex = 16;
             label8.Text = "Spray";
-            label8.Click += label8_Click;
+            label8.Click += Label_Click;
             // 
             // label9
             // 
@@ -327,13 +327,13 @@
             label9.Size = new Size(98, 15);
             label9.TabIndex = 17;
             label9.Text = "Wipe";
-            label9.Click += label9_Click;
+            label9.Click += Label_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(334, 98);
+            ClientSize = new Size(334, 261);
             Controls.Add(groupBox1);
             Controls.Add(button1);
             Controls.Add(label1);
