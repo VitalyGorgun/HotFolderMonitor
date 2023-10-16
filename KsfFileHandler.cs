@@ -23,7 +23,7 @@ namespace HotFolderMonitor
 
         }
 
-        public void updateValues(Dictionary<string, float> values)
+        public void updateValues(Dictionary<string, string> values)
         {
             CultureInfo culture = new CultureInfo("en-US");
             xmlDoc.Load(filePath);
@@ -31,9 +31,9 @@ namespace HotFolderMonitor
             foreach (var pair in values)
             {
                 string key = pair.Key;
-                float value = pair.Value;
+                string value = pair.Value;
 
-                if (value != 0)
+                if (value != "none")
                 {
                     XmlNodeList keyNodes = xmlDoc.SelectNodes("//" + key);
                     foreach (XmlNode node in keyNodes)

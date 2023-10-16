@@ -1,24 +1,19 @@
 ﻿using HotFolderMonitor;
-using System.Globalization;
 
 namespace HF_FIX
 {
     internal class FileProcessor
     {
         private bool isMonitoring = true;
-        private string DirectoryPath;        // The directory path where files are processed
-        private string CurrentColorProfile;  // The current color profile being processed
+        private string DirectoryPath = "D:/QuickP Production/Common/HotFolder";        // The directory path where files are processed
+        private string CurrentColorProfile ="another";  // The current color profile being processed
 
-        public float copies;
-        public float printHeight;
-        public float mediaThikness;
+        public Dictionary<string, string> XMLvalues;
 
-
-        CultureInfo culture = new CultureInfo("en-US");
-
-        public FileProcessor(string directoryPath)
+        public FileProcessor(string directoryPath, Dictionary<string, string> values)
         {
             DirectoryPath = directoryPath;
+            XMLvalues = values;
             InitializeWatcher();
         }
 
@@ -64,15 +59,7 @@ namespace HF_FIX
         {
             KsfFileHandler fileHandler = new KsfFileHandler(fullPath);
             CurrentColorProfile = fileHandler.returnColorProfile();
-
-            Dictionary<string, float> values = new Dictionary<string, float>();
-
-            values["TotalCopies"] = copies;
-            values["MediaPrintHeight"] = printHeight;
-            values["MediaThickness"] = mediaThikness;
-            values["XOffsetMM"] = 1488;
-
-            fileHandler.updateValues(values);
+            fileHandler.updateValues(XMLvalues);
 
         }
 
