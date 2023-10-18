@@ -47,6 +47,8 @@
             spray = new CheckBox();
             wipe = new CheckBox();
             groupBox1 = new GroupBox();
+            label10 = new Label();
+            comboBox1 = new ComboBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             label7 = new Label();
             label8 = new Label();
@@ -252,13 +254,37 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label10);
+            groupBox1.Controls.Add(comboBox1);
             groupBox1.Controls.Add(tableLayoutPanel1);
             groupBox1.Location = new Point(12, 96);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(310, 155);
+            groupBox1.Size = new Size(310, 185);
             groupBox1.TabIndex = 17;
             groupBox1.TabStop = false;
             groupBox1.Text = "Presets";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = SystemColors.ControlDarkDark;
+            label10.Location = new Point(6, 25);
+            label10.Name = "label10";
+            label10.Size = new Size(69, 15);
+            label10.TabIndex = 20;
+            label10.Text = "Pallet name";
+            label10.Click += Label_Click;
+            // 
+            // comboBox1
+            // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.Enabled = false;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Standard pallet", "Zipper hoodie pallet" });
+            comboBox1.Location = new Point(81, 22);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(223, 23);
+            comboBox1.TabIndex = 19;
             // 
             // tableLayoutPanel1
             // 
@@ -283,7 +309,7 @@
             tableLayoutPanel1.Controls.Add(label7, 2, 1);
             tableLayoutPanel1.Controls.Add(label8, 2, 2);
             tableLayoutPanel1.Controls.Add(label9, 2, 3);
-            tableLayoutPanel1.Location = new Point(6, 22);
+            tableLayoutPanel1.Location = new Point(6, 51);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
@@ -333,12 +359,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(334, 261);
+            ClientSize = new Size(334, 292);
             Controls.Add(groupBox1);
             Controls.Add(button1);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximumSize = new Size(350, 300);
+            MaximumSize = new Size(350, 350);
             MinimumSize = new Size(350, 135);
             Name = "Form1";
             Text = "HotFolder Monitor";
@@ -348,6 +374,7 @@
             ((System.ComponentModel.ISupportInitialize)sprayAmount).EndInit();
             ((System.ComponentModel.ISupportInitialize)yOffset).EndInit();
             groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
@@ -376,5 +403,7 @@
         private Label label7;
         private Label label8;
         private Label label9;
+        private ComboBox comboBox1;
+        private Label label10;
     }
 }

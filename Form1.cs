@@ -6,7 +6,11 @@ namespace HotFolderMonitor
     public partial class Form1 : Form
     {
         FileProcessor x;
-        public Form1() { InitializeComponent(); }
+        public Form1()
+        {
+            InitializeComponent();
+            comboBox1.SelectedIndex = 0;
+        }
 
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -14,16 +18,17 @@ namespace HotFolderMonitor
                 CultureInfo culture = new("en-US");
                 Dictionary<string, string> values = new()
                 {
+                    ["TableName"] = comboBox1.Enabled ? comboBox1.SelectedItem.ToString() : "none",
                     ["TotalCopies"] = copiesValue.Enabled ? copiesValue.Value.ToString(culture) : "none",
                     ["MediaPrintHeight"] = printHeight.Enabled ? printHeight.Value.ToString(culture) : "none",
                     ["MediaThickness"] = mediaThikness.Enabled ? mediaThikness.Value.ToString(culture) : "none",
                     ["SprayAmount"] = sprayAmount.Enabled ? sprayAmount.Value.ToString(culture) : "none",
                     ["LinearSprayAmount"] = sprayAmount.Enabled ? sprayAmount.Value.ToString(culture) : "none",
                     ["YOffsetMM"] = yOffset.Enabled ? yOffset.Value.ToString(culture) : "none",
-                    ["XCenter"] = xCenter.Enabled ? xCenter.Checked.ToString() : "none",
+                    ["XCenter"] = xCenter.Enabled ? xCenter.Checked.ToString().ToLower() : "none",
                     ["YCenter"] = yOffset.Enabled ? "false" : "none",
-                    ["IsSpray"] = spray.Enabled ? spray.Checked.ToString() : "none",
-                    ["IsWipe"] = wipe.Enabled ? wipe.Checked.ToString() : "none"
+                    ["IsSpray"] = spray.Enabled ? spray.Checked.ToString().ToLower() : "none",
+                    ["IsWipe"] = wipe.Enabled ? wipe.Checked.ToString().ToLower() : "none"
                 };
 
                 x = new FileProcessor(label1.Text, values);
@@ -88,6 +93,10 @@ namespace HotFolderMonitor
                     case "label9":
                         wipe.Enabled = !wipe.Enabled;
                         label9.ForeColor = wipe.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "label10":
+                        comboBox1.Enabled = !comboBox1.Enabled;
+                        label10.ForeColor = comboBox1.Enabled ? Color.Black : Color.Gray;
                         break;
 
                     default:
