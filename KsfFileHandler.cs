@@ -11,39 +11,57 @@ namespace HotFolderMonitor
         public KsfFileHandler(string filePath)
         {
             this.filePath = filePath;
+            xmlDoc.Load(filePath);
         }
 
         public string ReturnColorProfile()
         {
-            xmlDoc.Load(filePath);
-            string mediaName = xmlDoc.DocumentElement.SelectSingleNode("//MediaName").InnerText.ToLower();
-            if (mediaName.Contains("white")
-                || mediaName.Contains("light")) return "white";
-            else return "another";
-
+            return getSingleNode("MediaName").ToLower() == "light" ||
+                getSingleNode("MediaName").ToLower() == "white" ? "white" : "black";
         }
 
         public void UpdateValues(Dictionary<string, string> values)
         {
-            CultureInfo culture = new("en-US");
-            xmlDoc.Load(filePath);
-
             foreach (var pair in values)
             {
-                string key = pair.Key;
-                string value = pair.Value;
-
-                if (value != "none")
+                switch (pair.Key)
                 {
-                    XmlNodeList keyNodes = xmlDoc.SelectNodes("//" + key);
-                    foreach (XmlNode node in keyNodes)
-                    {
-                        node.InnerText = value.ToString(culture);
-                    }
+                    case "XCenter":
+                        if (pair.Value != "none" && int.Parse(getSingleNode("//HeightMM")) < 150 && int.Parse(getSingleNode("WidthMM")) < 150) { }
+                        else if(pair.Value != "none") { setXmlNodes(pair.Key, pair.Value); };
+                        break;
+                    case "YOffsetMM":
+
+                        if (pair.Value != "none" && int.Parse(getSingleNode("//HeightMM")) + int.Parse(pair.Value) > 495)
+                        {
+                            int YOffsetMM = 495 - int.Parse(getSingleNode("//HeightMM"));
+                            setXmlNodes(pair.Key, YOffsetMM.ToString());
+                        }
+                        else if (pair.Value != "none") setXmlNodes(pair.Key, pair.Value);
+                        break;
+                    default:
+                        if (pair.Value != "none") setXmlNodes(pair.Key, pair.Value);
+                        break;
                 }
             }
             xmlDoc.Save(filePath);
             File.Move(filePath, filePath + "-processed");// Rename the processed file by appending "-processed" to its name
+        }
+        private void setXmlNodes(string key, string value)
+        {
+            CultureInfo culture = new("en-US");
+            XmlNodeList keyNodes = xmlDoc.SelectNodes("//" + key);
+            foreach (XmlNode node in keyNodes)
+            {
+                node.InnerText = value.ToString(culture);
+            }
+        }
+
+        private string getSingleNode(string node)
+        {
+            string currentNode = "//" + node;
+            string x = xmlDoc.DocumentElement.SelectSingleNode(node).InnerText;
+            return xmlDoc.DocumentElement.SelectSingleNode(node).InnerText;
         }
     }
 }
