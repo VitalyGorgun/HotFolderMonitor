@@ -11,7 +11,7 @@ namespace HotFolderMonitor
         public Form1()
         {
             InitializeComponent();
-            comboBox1.SelectedIndex = 0;
+            palletNameComboBox.SelectedIndex = 0;
 
             timer = new System.Timers.Timer();
             timer.Interval = 30000; // Інтервал в мілісекундах (60 000 мс = 1 хвилина)
@@ -34,7 +34,7 @@ namespace HotFolderMonitor
                 CultureInfo culture = new("en-US");
                 Dictionary<string, string> values = new()
                 {
-                    ["TableName"] = comboBox1.Enabled ? comboBox1.SelectedItem.ToString() : "none",
+                    ["TableName"] = palletNameComboBox.Enabled ? palletNameComboBox.SelectedItem.ToString() : "none",
                     ["TotalCopies"] = "1",
                     ["MediaPrintHeight"] = printHeight.Enabled ? printHeight.Value.ToString(culture) : "none",
                     ["MediaThickness"] = mediaThikness.Enabled ? mediaThikness.Value.ToString(culture) : "none",
@@ -44,7 +44,9 @@ namespace HotFolderMonitor
                     ["XCenter"] = xCenter.Enabled ? xCenter.Checked.ToString().ToLower() : "none",
                     ["YCenter"] = yOffset.Enabled ? "false" : "none",
                     ["IsSpray"] = "true",
-                    ["IsWipe"] = "true"
+                    ["IsWipe"] = "true",
+                    ["Color4DInterlace"] = fourPassCheckBox.Enabled ? fourPassCheckBox.Checked.ToString().ToLower() : "none",
+                    ["White4DInterlace"] = fourPassCheckBox.Enabled ? fourPassCheckBox.Checked.ToString().ToLower() : "none",
                 };
 
                 x = new FileMonitor("D:\\QuickP Production\\Common\\HotFolder", values);
@@ -66,29 +68,34 @@ namespace HotFolderMonitor
             {
                 switch (clickedLabel.Name)
                 {
-                    case "label3":
+                    case "palletNameLabel":
+                        palletNameComboBox.Enabled = !palletNameComboBox.Enabled;
+                        palletNameComboBox.ForeColor = palletNameComboBox.Enabled ? Color.Black : Color.Gray;
+                        palletNameLabel.ForeColor = palletNameComboBox.Enabled ? Color.Black : Color.Gray;
+                        break;
+                    case "printHeightLabel":
                         printHeight.Enabled = !printHeight.Enabled;
-                        label3.ForeColor = printHeight.Enabled ? Color.Black : Color.Gray;
+                        printHeightLabel.ForeColor = printHeight.Enabled ? Color.Black : Color.Gray;
                         break;
-                    case "label4":
+                    case "mediaThiknessLabel":
                         mediaThikness.Enabled = !mediaThikness.Enabled;
-                        label4.ForeColor = mediaThikness.Enabled ? Color.Black : Color.Gray;
+                        mediaThiknessLabel.ForeColor = mediaThikness.Enabled ? Color.Black : Color.Gray;
                         break;
-                    case "label5":
+                    case "sprayLabel":
                         sprayAmount.Enabled = !sprayAmount.Enabled;
-                        label5.ForeColor = sprayAmount.Enabled ? Color.Black : Color.Gray;
+                        sprayLabel.ForeColor = sprayAmount.Enabled ? Color.Black : Color.Gray;
                         break;
-                    case "label6":
+                    case "yOffsetLabel":
                         yOffset.Enabled = !yOffset.Enabled;
-                        label6.ForeColor = yOffset.Enabled ? Color.Black : Color.Gray;
+                        yOffsetLabel.ForeColor = yOffset.Enabled ? Color.Black : Color.Gray;
                         break;
-                    case "label7":
+                    case "xCenterLabel":
                         xCenter.Enabled = !xCenter.Enabled;
-                        label7.ForeColor = xCenter.Enabled ? Color.Black : Color.Gray;
+                        xCenterLabel.ForeColor = xCenter.Enabled ? Color.Black : Color.Gray;
                         break;
-                    case "label10":
-                        comboBox1.Enabled = !comboBox1.Enabled;
-                        label10.ForeColor = comboBox1.Enabled ? Color.Black : Color.Gray;
+                    case "fourPassLabel":
+                        fourPassCheckBox.Enabled = !fourPassCheckBox.Enabled;
+                        fourPassLabel.ForeColor = fourPassCheckBox.Enabled ? Color.Black : Color.Gray;
                         break;
                     default:
                         break;

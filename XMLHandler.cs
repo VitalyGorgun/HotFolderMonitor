@@ -15,23 +15,32 @@ public static class XMLHandler
     public static void UpdateValues(Dictionary<string, string> values, string filePath)
     {
         xmlDoc.Load(filePath);
-
         foreach (var pair in values)
         {
+            if (pair.Value == "none") continue;
             switch (pair.Key)
             {
-                case "XCenter":
-                    if (pair.Value != "none" && int.Parse(getSingleNode("//HeightMM")) < 150 && int.Parse(getSingleNode("WidthMM")) < 150) { }
-                    else if (pair.Value != "none") { setXmlNodes(pair.Key, pair.Value); };
-                    break;
-                case "YOffsetMM":
-
-                    if (pair.Value != "none" && int.Parse(getSingleNode("//HeightMM")) + int.Parse(pair.Value) > 495)
+                case "XCenter"://Якщо плік менше 15х15см не центрувати
+                    try
                     {
-                        int YOffsetMM = 495 - int.Parse(getSingleNode("//HeightMM"));
-                        setXmlNodes(pair.Key, YOffsetMM.ToString());
+                        if (float.Parse(getSingleNode("//HeightMM")) < 150 && float.Parse(getSingleNode("WidthMM")) < 150) { }
+                        else setXmlNodes(pair.Key, pair.Value);
                     }
-                    else if (pair.Value != "none") setXmlNodes(pair.Key, pair.Value);
+                    catch (Exception e) { }
+
+
+                    break;
+                case "YOffsetMM"://Якщо оффсет + довжинаНадруку > довжиниПалети 
+                    try
+                    {
+                        if (float.Parse(getSingleNode("//HeightMM")) + float.Parse(pair.Value) > 495)
+                        {
+                            float YOffsetMM = 495 - float.Parse(getSingleNode("//HeightMM"));
+                            setXmlNodes(pair.Key, YOffsetMM.ToString());
+                        }
+                        else setXmlNodes(pair.Key, pair.Value);
+                    }
+                    catch (Exception e) { }
                     break;
                 default:
                     if (pair.Value != "none") setXmlNodes(pair.Key, pair.Value);
@@ -49,23 +58,17 @@ public static class XMLHandler
             XmlNodeList keyNodes = xmlDoc.SelectNodes("//" + key);
             foreach (XmlNode node in keyNodes) node.InnerText = value.ToString(culture);
         }
-        catch (Exception e)
-        {
+        catch (Exception) { }
 
-        }
-        
     }
     private static string getSingleNode(string node)
     {
-        try{
+        try
+        {
             string currentNode = "//" + node;
             string x = xmlDoc.DocumentElement.SelectSingleNode(node).InnerText;
             return xmlDoc.DocumentElement.SelectSingleNode(node).InnerText;
         }
-        catch(Exception e)
-        {
-            return "false";
-        }
-
+        catch (Exception) { return "false"; }
     }
 }
