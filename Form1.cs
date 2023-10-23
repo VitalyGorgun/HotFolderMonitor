@@ -1,4 +1,3 @@
-using HF_FIX;
 using System.Globalization;
 using System.Timers;
 
@@ -6,7 +5,7 @@ namespace HotFolderMonitor
 {
     public partial class Form1 : Form
     {
-        FileProcessor x;
+        FileMonitor x;
         private System.Timers.Timer timer;
 
         public Form1()
@@ -48,8 +47,7 @@ namespace HotFolderMonitor
                     ["IsWipe"] = "true"
                 };
 
-                x = new FileProcessor("D:\\QuickP Production\\Common\\HotFolder", values);
-
+                x = new FileMonitor("D:\\QuickP Production\\Common\\HotFolder", values);
                 this.Hide();// Згортаємо вікно в трей
                 notifyIcon1.Visible = true;// Відображаємо іконку в треї
             }
