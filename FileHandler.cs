@@ -1,4 +1,6 @@
-﻿public class FileHandler
+﻿using HotFolderMonitor;
+
+public class FileHandler
 {
     private string? colorProfile;
     private string? packageName;
@@ -18,13 +20,13 @@
             string extension = Path.GetExtension(filePath).ToLower();
             if (extension == ".tif")
             {
-                RenameFile(filePath);
+                if (!File.Exists(filePath + tempExtension)) RenameFile(filePath);
                 if (isPackageFull()) ReturnValues();
             }
             else if (extension == ".ksf")
             {
                 packageName = Path.GetFileNameWithoutExtension(filePath).Substring(0, Path.GetFileNameWithoutExtension(filePath).Length - 1);
-                RenameFile(filePath);
+                if (!File.Exists(filePath + tempExtension)) RenameFile(filePath);
                 colorProfile = XMLHandler.GetColorProfile(filePath + tempExtension);
                 XMLHandler.UpdateValues(ksfPreset, filePath + tempExtension);
                 if (isPackageFull()) ReturnValues();
@@ -35,14 +37,29 @@
 
     private void ReturnValues()
     {
-        string[] filesToRename = Directory.GetFiles(folderPath).Where(file => Path.GetFileName(file).Contains(packageName)).ToArray();
-        foreach (string file in filesToRename)
+        try
         {
-            string returnedName = file.Substring(0, file.Length - tempExtension.Length); ;
-            while (File.Exists(file)) { try { File.Move(file, returnedName); } catch (IOException) { } }
+            string[] filesToRename = Directory.GetFiles(folderPath).Where(file => Path.GetFileName(file).Contains(packageName)).ToArray();
+            foreach (string file in filesToRename)
+            {
+                string returnedName = file.Substring(0, file.Length - tempExtension.Length);
+
+                while (File.Exists(file))
+                {
+                    try
+                    {
+                        if (!File.Exists(returnedName))
+                        {
+                            File.Move(file, returnedName);
+                        };
+                    }
+                    catch (IOException) { }
+                }
+            }
+            string[] filesToDelete = Directory.GetFiles(folderPath).Where(file => !Path.GetFileName(file).Contains(packageName)).ToArray();
+            foreach (string file in filesToDelete) { DeleteFile(file); }
         }
-        string[] filesToDelete = Directory.GetFiles(folderPath).Where(file => !Path.GetFileName(file).Contains(packageName)).ToArray();
-        foreach (string file in filesToDelete) { DeleteFile(file); }
+        catch (Exception ex) { Logger.LogError($"Failed to return filenames: ", ex); }
     }
     private bool isPackageFull()
     {
@@ -71,18 +88,26 @@
     }
     private void RenameFile(string filePath)
     {
-        while (File.Exists(filePath) && !File.Exists(filePath + tempExtension))
+        try
         {
-            try { File.Move(filePath, filePath + tempExtension); }
-            catch (IOException) { }
+            while (File.Exists(filePath) && !File.Exists(filePath + tempExtension))
+            {
+                try { File.Move(filePath, filePath + tempExtension); } 
+                catch (IOException) { }
+            }
         }
+        catch (Exception ex) { Logger.LogError("FileHandler.DeleteFile: ", ex); }
     }
     private void DeleteFile(string filePath)
     {
-        while (File.Exists(filePath))
+        try
         {
-            try { File.Delete(filePath); }
-            catch (IOException) { }
+            while (File.Exists(filePath))
+            {
+                try { File.Delete(filePath); }
+                catch (IOException) { }
+            }
         }
+        catch (Exception ex) { Logger.LogError("FileHandler.DeleteFile: ", ex); }
     }
 }

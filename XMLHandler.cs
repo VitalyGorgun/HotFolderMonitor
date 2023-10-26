@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using HotFolderMonitor;
+using System.Globalization;
 using System.Xml;
 
 public static class XMLHandler
@@ -14,10 +15,11 @@ public static class XMLHandler
     }
     public static void UpdateValues(Dictionary<string, string> values, string filePath)
     {
-        xmlDoc.Load(filePath);
+        try { xmlDoc.Load(filePath); } catch (Exception ex) { Logger.LogError($"Failed to load the file({filePath}): ", ex); return; }
         foreach (var pair in values)
         {
             if (pair.Value == "none") continue;
+
             switch (pair.Key)
             {
                 case "XCenter"://Якщо плік менше 15х15см не центрувати
@@ -26,9 +28,7 @@ public static class XMLHandler
                         if (float.Parse(getSingleNode("//HeightMM")) < 150 && float.Parse(getSingleNode("WidthMM")) < 150) { }
                         else setXmlNodes(pair.Key, pair.Value);
                     }
-                    catch (Exception e) { }
-
-
+                    catch (Exception ex) { Logger.LogError($"Failed to update [{pair.Key}] attribute {filePath}: ", ex); }
                     break;
                 case "YOffsetMM"://Якщо оффсет + довжинаНадруку > довжиниПалети 
                     try
@@ -40,14 +40,16 @@ public static class XMLHandler
                         }
                         else setXmlNodes(pair.Key, pair.Value);
                     }
-                    catch (Exception e) { }
+                    catch (Exception ex) { Logger.LogError($"Failed to update [{pair.Key}] attribute {filePath}: ", ex); }
                     break;
                 default:
-                    if (pair.Value != "none") setXmlNodes(pair.Key, pair.Value);
+                    try { setXmlNodes(pair.Key, pair.Value); }
+                    catch (Exception ex) { Logger.LogError($"Failed to update [{pair.Key}] attribute {filePath}: ", ex); }
                     break;
             }
+
         }
-        xmlDoc.Save(filePath);
+        try { xmlDoc.Save(filePath); } catch (Exception ex) { Logger.LogError($"Failed to save the file({filePath}): ", ex); }
     }
 
 
@@ -58,7 +60,7 @@ public static class XMLHandler
             XmlNodeList keyNodes = xmlDoc.SelectNodes("//" + key);
             foreach (XmlNode node in keyNodes) node.InnerText = value.ToString(culture);
         }
-        catch (Exception) { }
+        catch (Exception ex) { Logger.LogError($"Failed to set [{key}] node: ", ex); }
 
     }
     private static string getSingleNode(string node)
@@ -69,6 +71,6 @@ public static class XMLHandler
             string x = xmlDoc.DocumentElement.SelectSingleNode(node).InnerText;
             return xmlDoc.DocumentElement.SelectSingleNode(node).InnerText;
         }
-        catch (Exception) { return "false"; }
+        catch (Exception ex) { Logger.LogError($"Failed to get [{node}] node: ", ex); return "false"; }
     }
 }
