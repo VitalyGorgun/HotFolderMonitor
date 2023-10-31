@@ -1,15 +1,14 @@
 using System.Globalization;
 using System.Timers;
 
-namespace HotFolderMonitor
-{
-    public partial class Form1 : Form
-    {
-        FileMonitor x;
+namespace HotFolderMonitor {
+
+    public partial class MainForm : Form {
+        
+        FileMonitor? MainFileMonitor;
         private System.Timers.Timer timer;
 
-        public Form1()
-        {
+        public MainForm() {
             InitializeComponent();
             palletNameComboBox.SelectedIndex = 0;
 
@@ -24,16 +23,13 @@ namespace HotFolderMonitor
             DateTime currentTime = DateTime.Now;
             if (currentTime.TimeOfDay >= new TimeSpan(21, 45, 0) && currentTime.TimeOfDay < new TimeSpan(21, 46, 0) ||
                 currentTime.TimeOfDay >= new TimeSpan(13, 45, 0) && currentTime.TimeOfDay < new TimeSpan(13, 46, 0) ||
-                currentTime.TimeOfDay >= new TimeSpan(5, 45, 0) && currentTime.TimeOfDay < new TimeSpan(5, 46, 0))
-            { this.Invoke(new Action(() => { this.Close(); })); }
+                currentTime.TimeOfDay >= new TimeSpan(5, 45, 0) && currentTime.TimeOfDay < new TimeSpan(5, 46, 0)) { this.Invoke(new Action(() => { this.Close(); })); }
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            {
+        private void StartButtonOnClick(object sender, EventArgs e) {
+            if (MainFileMonitor == null) {
                 CultureInfo culture = new("en-US");
-                Dictionary<string, string> values = new()
-                {
+                Dictionary<string, string> values = new() {
                     ["TableName"] = palletNameComboBox.Enabled ? palletNameComboBox.SelectedItem.ToString() : "none",
                     ["TotalCopies"] = "1",
                     ["MediaPrintHeight"] = printHeight.Enabled ? printHeight.Value.ToString(culture) : "none",
@@ -49,25 +45,22 @@ namespace HotFolderMonitor
                     ["White4DInterlace"] = fourPassCheckBox.Enabled ? fourPassCheckBox.Checked.ToString().ToLower() : "none",
                 };
 
-                x = new FileMonitor("D:\\QuickP Production\\Common\\HotFolder", values);
+                MainFileMonitor = new FileMonitor("D:\\QuickP Production\\Common\\HotFolder", values);
                 this.Hide();// Згортаємо вікно в трей
                 notifyIcon1.Visible = true;// Відображаємо іконку в треї
             }
         }
 
-        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
-        {
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e) {
             this.Show();// При кліку на іконку трею відновлюємо вікно
-            x.StopMonitoring();
+            MainFileMonitor.StopMonitoring();
+            MainFileMonitor = null;
             notifyIcon1.Visible = false; // Ховаємо іконку в треї
         }
 
-        private void Label_Click(object sender, EventArgs e)
-        {
-            if (sender is Label clickedLabel)
-            {
-                switch (clickedLabel.Name)
-                {
+        private void LabelOnClick(object sender, EventArgs e) {
+            if (sender is Label clickedLabel) {
+                switch (clickedLabel.Name) {
                     case "palletNameLabel":
                         palletNameComboBox.Enabled = !palletNameComboBox.Enabled;
                         palletNameComboBox.ForeColor = palletNameComboBox.Enabled ? Color.Black : Color.Gray;

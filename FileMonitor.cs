@@ -2,6 +2,7 @@
 {
     private FileSystemWatcher watcher;
     private FileHandler fileHandler;
+   
     public FileMonitor(string folderPath, Dictionary<string, string> ksfPreset)
     {
         watcher = new FileSystemWatcher(folderPath);
@@ -17,7 +18,7 @@
         Console.ReadLine();
     }
 
-    public void StopMonitoring() 
+    public void StopMonitoring()
     {
         watcher.Created -= OnFileCreated; // Видалення обробника подій
         watcher.EnableRaisingEvents = false; // Вимкнення підвищення подій

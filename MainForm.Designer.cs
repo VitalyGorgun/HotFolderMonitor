@@ -1,7 +1,5 @@
-﻿namespace HotFolderMonitor
-{
-    partial class Form1
-    {
+﻿namespace HotFolderMonitor {
+    partial class MainForm {
         /// <summary>
         ///  Required designer variable.
         /// </summary>
@@ -11,10 +9,8 @@
         ///  Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -26,11 +22,10 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            button1 = new Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            StartButton = new Button();
             printHeight = new NumericUpDown();
             mediaThikness = new NumericUpDown();
             notifyIcon1 = new NotifyIcon(components);
@@ -56,18 +51,18 @@
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
-            // button1
+            // StartButton
             // 
-            button1.BackColor = Color.IndianRed;
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.ForeColor = SystemColors.ControlLightLight;
-            button1.Location = new Point(12, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(310, 40);
-            button1.TabIndex = 1;
-            button1.Text = "START";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += Button1_Click;
+            StartButton.BackColor = Color.IndianRed;
+            StartButton.FlatStyle = FlatStyle.Popup;
+            StartButton.ForeColor = SystemColors.ControlLightLight;
+            StartButton.Location = new Point(12, 12);
+            StartButton.Name = "StartButton";
+            StartButton.Size = new Size(310, 40);
+            StartButton.TabIndex = 1;
+            StartButton.Text = "START";
+            StartButton.UseVisualStyleBackColor = false;
+            StartButton.Click += StartButtonOnClick;
             // 
             // printHeight
             // 
@@ -101,7 +96,6 @@
             // 
             notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
             notifyIcon1.Text = "HotFolder Monitor";
-            notifyIcon1.Visible = true;
             notifyIcon1.MouseClick += NotifyIcon1_MouseClick;
             // 
             // printHeightLabel
@@ -114,7 +108,7 @@
             printHeightLabel.Size = new Size(98, 15);
             printHeightLabel.TabIndex = 6;
             printHeightLabel.Text = "Print height";
-            printHeightLabel.Click += Label_Click;
+            printHeightLabel.Click += LabelOnClick;
             // 
             // mediaThiknessLabel
             // 
@@ -126,7 +120,7 @@
             mediaThiknessLabel.Size = new Size(98, 15);
             mediaThiknessLabel.TabIndex = 7;
             mediaThiknessLabel.Text = "Media thikness";
-            mediaThiknessLabel.Click += Label_Click;
+            mediaThiknessLabel.Click += LabelOnClick;
             // 
             // sprayAmount
             // 
@@ -149,7 +143,7 @@
             sprayLabel.Size = new Size(98, 15);
             sprayLabel.TabIndex = 9;
             sprayLabel.Text = "Spray";
-            sprayLabel.Click += Label_Click;
+            sprayLabel.Click += LabelOnClick;
             // 
             // yOffset
             // 
@@ -170,7 +164,7 @@
             yOffsetLabel.Size = new Size(98, 15);
             yOffsetLabel.TabIndex = 11;
             yOffsetLabel.Text = "YOffset";
-            yOffsetLabel.Click += Label_Click;
+            yOffsetLabel.Click += LabelOnClick;
             // 
             // xCenter
             // 
@@ -205,14 +199,14 @@
             palletNameLabel.Size = new Size(69, 15);
             palletNameLabel.TabIndex = 20;
             palletNameLabel.Text = "Pallet name";
-            palletNameLabel.Click += Label_Click;
+            palletNameLabel.Click += LabelOnClick;
             // 
             // palletNameComboBox
             // 
             palletNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             palletNameComboBox.Enabled = false;
             palletNameComboBox.FormattingEnabled = true;
-            palletNameComboBox.Items.AddRange(new object[] { "Standard pallet", "Zipper hoodie pallet" });
+            palletNameComboBox.Items.AddRange(new object[] { "Standard pallet", "Zipper hoodie pallet", "RSS 15.9x19.9", "RSS 14.1x16.7", "RSS 11x15", "RSS 10.6x13.2" });
             palletNameComboBox.Location = new Point(81, 22);
             palletNameComboBox.Name = "palletNameComboBox";
             palletNameComboBox.Size = new Size(223, 23);
@@ -256,7 +250,7 @@
             xCenterLabel.Size = new Size(98, 15);
             xCenterLabel.TabIndex = 15;
             xCenterLabel.Text = "XCenter";
-            xCenterLabel.Click += Label_Click;
+            xCenterLabel.Click += LabelOnClick;
             // 
             // fourPassCheckBox
             // 
@@ -268,7 +262,7 @@
             fourPassCheckBox.Size = new Size(15, 24);
             fourPassCheckBox.TabIndex = 16;
             fourPassCheckBox.UseVisualStyleBackColor = true;
-            fourPassCheckBox.CheckedChanged += Label_Click;
+            fourPassCheckBox.CheckedChanged += LabelOnClick;
             // 
             // fourPassLabel
             // 
@@ -280,19 +274,19 @@
             fourPassLabel.Size = new Size(39, 15);
             fourPassLabel.TabIndex = 17;
             fourPassLabel.Text = "4 pass";
-            fourPassLabel.Click += Label_Click;
+            fourPassLabel.Click += LabelOnClick;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(334, 61);
+            ClientSize = new Size(334, 211);
             Controls.Add(groupBox1);
-            Controls.Add(button1);
+            Controls.Add(StartButton);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(350, 250);
             MinimumSize = new Size(350, 100);
-            Name = "Form1";
+            Name = "MainForm";
             Text = "HotFolder Monitor";
             ((System.ComponentModel.ISupportInitialize)printHeight).EndInit();
             ((System.ComponentModel.ISupportInitialize)mediaThikness).EndInit();
@@ -306,7 +300,7 @@
         }
 
         #endregion
-        private Button button1;
+        private Button StartButton;
         private NumericUpDown printHeight;
         private NumericUpDown mediaThikness;
         private NotifyIcon notifyIcon1;
