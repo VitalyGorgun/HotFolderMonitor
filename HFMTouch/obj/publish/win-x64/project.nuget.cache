@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "wuhNqEYzxVnJAz/WJzzFHpfUJq9NzM9B1PlRcPIAY7NBB5gp5zcy590zPDofDVidwrEYcl0rLdB4Rb4yJjv8CQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gorgu\\OneDrive\\Desktop\\HFMTouch\\HFMTouch\\HFMTouch.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gorgu\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.0\\microsoft.net.illink.tasks.8.0.0.nupkg.sha512",
+    "C:\\Users\\gorgu\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.0\\microsoft.netcore.app.runtime.win-x64.8.0.0.nupkg.sha512",
+    "C:\\Users\\gorgu\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.0\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.0.nupkg.sha512",
+    "C:\\Users\\gorgu\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.0\\microsoft.aspnetcore.app.runtime.win-x64.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

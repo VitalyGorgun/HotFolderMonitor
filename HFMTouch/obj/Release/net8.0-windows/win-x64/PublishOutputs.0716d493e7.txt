@@ -1,0 +1,7 @@
+C:\Users\gorgu\OneDrive\Desktop\HFMTouch.pdb
+C:\Users\gorgu\OneDrive\Desktop\D3DCompiler_47_cor3.dll
+C:\Users\gorgu\OneDrive\Desktop\PenImc_cor3.dll
+C:\Users\gorgu\OneDrive\Desktop\PresentationNative_cor3.dll
+C:\Users\gorgu\OneDrive\Desktop\vcruntime140_cor3.dll
+C:\Users\gorgu\OneDrive\Desktop\wpfgfx_cor3.dll
+C:\Users\gorgu\OneDrive\Desktop\HFMTouch.exe
